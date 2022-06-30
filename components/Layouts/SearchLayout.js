@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import EventSearch from "../Events/EventSearch";
+import { memo } from "react";
+import SearchEventForm from "../Events/SearchEventForm";
 
-export default function SearchLayout({ children }) {
+function SearchLayout({ children, currentSearch }) {
   const router = useRouter();
 
   function findEventsHandler(year, month) {
@@ -11,8 +12,10 @@ export default function SearchLayout({ children }) {
 
   return (
     <>
-      <EventSearch onSearch={findEventsHandler} />
+      <SearchEventForm onSearch={findEventsHandler} search={currentSearch} />
       <center>{children}</center>
     </>
   );
 }
+
+export default memo(SearchLayout);

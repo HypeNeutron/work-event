@@ -1,8 +1,9 @@
+import { memo } from "react";
 import Navbar from "./Navbar";
 import Notification from "../../components/notification/Notification";
 import { useNotificationContext } from "../../context/notification_context";
 
-export default function Layout({ children }) {
+function Layout({ children }) {
   const { activeNotification } = useNotificationContext();
   return (
     <>
@@ -18,3 +19,4 @@ export default function Layout({ children }) {
     </>
   );
 }
+export default memo(Layout);

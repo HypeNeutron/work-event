@@ -82,11 +82,13 @@ export default function FilterEvent() {
     );
   });
 
+  const currentSearch = { numYear, numMonth };
+
   if (filteredEvents.length === 0 || !filteredEvents) {
     return (
       <>
         {pageHeadData}
-        <SearchLayout>
+        <SearchLayout currentSearch={currentSearch}>
           <ErrorAlert>
             <p>No events found</p>
           </ErrorAlert>
@@ -108,7 +110,7 @@ export default function FilterEvent() {
   return (
     <>
       {pageHeadData}
-      <SearchLayout>
+      <SearchLayout currentSearch={currentSearch}>
         <div style={{ marginTop: "50px" }}>
           <TitleEvent date={date} />
           <Button link="/events">Show all Event</Button>
