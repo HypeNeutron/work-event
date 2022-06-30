@@ -1,0 +1,12 @@
+.notFound {
+  background-color: #83d9c8;
+  width: 100%;
+  &__center {
+    background-color: #83d9c8;
+    min-height: calc(100vh - 80px);
+    margin: 0 auto;
+    padding: 3em;
+    width: 100%;
+    max-width: 90vw;
+  }
+}

@@ -1,0 +1,49 @@
+.notification {
+  position: fixed;
+  bottom: -22px;
+  left: 0;
+  height: 6.5rem;
+  width: 100%;
+  background-color: #1b1b1b;
+  color: white;
+  padding: 0.52rem 10%;
+  padding-top: 0;
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  transform: translateY(107px);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: white;
+  }
+}
+
+.popup {
+  transform: translateY(0);
+}
+
+.hide {
+  transform: translateY(107px);
+}
+
+.pending {
+  background-color: #177cbe;
+}
+
+.success {
+  background-color: #10be58;
+}
+
+.error {
+  background-color: #e65035;
+}
+
+.warning {
+  background-color: #7f9600;
+}

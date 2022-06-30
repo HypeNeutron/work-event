@@ -1,0 +1,21 @@
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.commentsList li {
+  text-align: left;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid #ccc;
+  p {
+    margin: 0;
+  }
+  div {
+    text-align: right;
+    font-style: italic;
+  }
+  div address {
+    display: inline;
+  }
+}
