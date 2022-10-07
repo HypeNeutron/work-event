@@ -1,7 +1,7 @@
 import { getFeaturedEvents } from "../utils/api-util";
 import Header from "../components/Events/Header";
 import NewsletterRegistration from "../components/NewsLettersRegister/NewsletterRegistration";
-import EventList from "../components/Events/EventList/EventList";
+import EventList from "../components/Events/EventList/";
 
 export default function HomePage({ event, err }) {
   if (err)
