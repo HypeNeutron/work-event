@@ -1,5 +1,4 @@
-import { getAllEvents } from "../../utils/api";
-
+import { getAllEvents } from "../../api/firebaseApi";
 import getError from "../../utils/getError";
 import EventList from "../../components/Events/EventList";
 import EventSearchLayout from "../../components/Events/EventSearchLayout";

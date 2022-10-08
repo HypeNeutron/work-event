@@ -1,5 +1,4 @@
-// import { getFeaturedEvents } from "../utils/api-util";
-import { getFeaturedEvents } from "../utils/api";
+import { getFeaturedEvents } from "../api/firebaseApi";
 import getError from "../utils/getError";
 import Header from "../components/Events/Header";
 import NewsLettersRegister from "../components/NewsLettersRegister";

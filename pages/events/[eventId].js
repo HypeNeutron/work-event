@@ -1,4 +1,4 @@
-import { getEventById, getFeaturedEvents } from "../../utils/api";
+import { getEventById, getFeaturedEvents } from "../../api/firebaseApi";
 import ErrorAlert from "../../components/Events/ErrorAlert";
 import { useRouter } from "next/router";
 import {

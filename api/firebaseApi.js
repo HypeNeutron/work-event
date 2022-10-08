@@ -1,4 +1,4 @@
-import db from "./firebaseConnect";
+import db from "../lib/firebaseConnect";
 import { ref, onValue } from "firebase/database";
 
 export async function getAllEvents() {
