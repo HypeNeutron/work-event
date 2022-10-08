@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { getFilteredEvents } from "../utils/api-util";
 
-const useFilter = (filterEvents, numYear, numMonth) => {
+const useFilter = (numYear, numMonth) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
   const [notFound, setNotFound] = useState(false);
@@ -38,7 +38,7 @@ const useFilter = (filterEvents, numYear, numMonth) => {
       setNotFound(false);
       setData(filteredEvents);
     }
-  }, [filterEvents]);
+  }, [numMonth, numYear]);
 
   useEffect(() => {
     fetchFilterEvents();

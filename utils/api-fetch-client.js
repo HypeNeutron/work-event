@@ -1,9 +1,8 @@
+import getError from "./getError";
+
 export async function getAllEvents() {
   try {
-    const res = await fetch(
-      "https://nextjs-a5896-default-rtdb.firebaseio.com/events.json"
-    );
-    //# firebase return data as the obj!
+    const res = await fetch(process.env.FIREBASE_BASE_URI);
     if (!res.ok) throw new Error();
     const data = await res.json();
     const events = [];
@@ -14,14 +13,8 @@ export async function getAllEvents() {
       });
     }
     return events;
-  } catch (error) {
-    let err;
-    if (error.toString().includes("Network Error")) {
-      err = "Network Error please check your connection";
-    } else {
-      err = error.message;
-    }
-    return err;
+  } catch (err) {
+    return getError(err);
   }
 }
 

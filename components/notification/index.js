@@ -1,8 +1,12 @@
+import ReactDOM from "react-dom";
 import classes from "./Notification.module.scss";
 import { useNotificationContext } from "../../context/notification_context";
 
 function Notification({ title, message, status }) {
-  const { activeNotification, hide } = useNotificationContext();
+  const {
+    activeNotification: { hide },
+    hideNotification,
+  } = useNotificationContext();
 
   let statusClasses = "";
 
@@ -24,14 +28,15 @@ function Notification({ title, message, status }) {
   }
 
   const activeClasses = `${classes.notification} ${statusClasses} ${
-    activeNotification.hide === false ? classes.popup : classes.hide
+    hide === false ? classes.popup : classes.hide
   }`;
 
-  return (
-    <div className={activeClasses} onClick={hide}>
+  return ReactDOM.createPortal(
+    <div className={activeClasses} onClick={hideNotification}>
       <h2>{title}</h2>
       <p>{message}</p>
-    </div>
+    </div>,
+    document.getElementById("notification")
   );
 }
 

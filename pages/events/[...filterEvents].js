@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import EventList from "../../components/Events/EventList/EventList";
-import SearchLayout from "../../components/Layouts/SearchLayout";
-import Button from "../../components/Buttons/Button";
+import EventList from "../../components/Events/EventList";
+import EventSearchLayout from "../../components/Events/EventSearchLayout";
+import Button from "../../components/Buttons";
 import TitleEvent from "../../components/Events/TitleEvent";
 import ErrorAlert from "../../components/Events/ErrorAlert";
 import Header from "../../components/Events/Header";
@@ -18,11 +18,12 @@ export default function FilterEvent() {
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error } = useSWR(
-    "https://nextjs-a5896-default-rtdb.firebaseio.com/events.json",
+    process.env.NEXT_PUBLIC_FIREBASE_DB_URI,
     fetcher
   );
 
   useEffect(() => {
+    // get data from firebase on client and filter
     if (data) {
       const events = [];
       for (const key in data) {
@@ -43,9 +44,9 @@ export default function FilterEvent() {
     return (
       <>
         {pageHeadData}
-        <SearchLayout>
+        <EventSearchLayout>
           <p>Loading...</p>
-        </SearchLayout>
+        </EventSearchLayout>
       </>
     );
   }
@@ -65,12 +66,12 @@ export default function FilterEvent() {
     return (
       <>
         {pageHeadData}
-        <SearchLayout>
+        <EventSearchLayout>
           <ErrorAlert>
             <p>Invalid Filter Please adjust your values..🔎</p>
           </ErrorAlert>
           <Button link="/events">Show all Event</Button>
-        </SearchLayout>
+        </EventSearchLayout>
       </>
     );
   }
@@ -88,35 +89,31 @@ export default function FilterEvent() {
     return (
       <>
         {pageHeadData}
-        <SearchLayout currentSearch={currentSearch}>
+        <EventSearchLayout currentSearch={currentSearch}>
           <ErrorAlert>
             <p>No events found</p>
           </ErrorAlert>
           <Button link="/events">Show all Event</Button>
-        </SearchLayout>
+        </EventSearchLayout>
       </>
     );
   }
 
   const date = new Date(numYear, numMonth);
 
-  pageHeadData = (
-    <Header
-      title="Filtered Events"
-      desc={`All events in ${numMonth}/${numYear}`}
-    />
-  );
-
   return (
     <>
-      {pageHeadData}
-      <SearchLayout currentSearch={currentSearch}>
+      <Header
+        title="Filtered Events"
+        desc={`All events in ${numMonth}/${numYear}`}
+      />
+      <EventSearchLayout currentSearch={currentSearch}>
         <div style={{ marginTop: "50px" }}>
           <TitleEvent date={date} />
           <Button link="/events">Show all Event</Button>
         </div>
         <EventList items={filteredEvents} />
-      </SearchLayout>
+      </EventSearchLayout>
     </>
   );
 }

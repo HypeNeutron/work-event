@@ -3,7 +3,7 @@ import Comment from "../../../models/Comment";
 
 export default async function handler(req, res) {
   const { eventId } = req.query;
-  await dbConnect("events");
+  await dbConnect("work-events");
 
   if (req.method === "POST") {
     try {

@@ -1,9 +1,8 @@
-import classes from "./EventCard.module.scss";
-import EventCardItem from "./EventCardItem";
-import { CalendarIcon } from "@heroicons/react/outline";
-import { LocationMarkerIcon } from "@heroicons/react/outline";
 import Image from "next/image";
+import EventCardItem from "./EventCardItem";
 import rgbDataURL from "../../../utils/rgbDataURL";
+import { CalendarIcon, MapIcon } from "@heroicons/react/24/outline";
+import classes from "./EventCard.module.scss";
 
 export default function EventCard(props) {
   const { date, address, image, imageAlt } = props;
@@ -17,7 +16,7 @@ export default function EventCard(props) {
   const addressText = address.replace(", ", "\n");
 
   return (
-    <section className={classes.card}>
+    <article className={classes.card}>
       <div className={classes.card__image}>
         <Image
           src={`/${image}`}
@@ -32,10 +31,10 @@ export default function EventCard(props) {
         <EventCardItem icon={CalendarIcon}>
           <time>{dateFormat}</time>
         </EventCardItem>
-        <EventCardItem icon={LocationMarkerIcon}>
+        <EventCardItem icon={MapIcon}>
           <address>{addressText}</address>
         </EventCardItem>
       </ul>
-    </section>
+    </article>
   );
 }

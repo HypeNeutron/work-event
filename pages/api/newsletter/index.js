@@ -2,7 +2,7 @@ import dbConnect from "../../../lib/dbConnect";
 import Newsletter from "../../../models/Newsletter";
 
 export default async function handler(req, res) {
-  await dbConnect("events");
+  await dbConnect("work-events");
   if (req.method === "POST") {
     try {
       const { email } = req.body;

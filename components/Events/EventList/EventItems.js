@@ -1,10 +1,12 @@
-import classes from "./EventList.module.scss";
 import Image from "next/image";
-import Button from "../../Buttons/Button";
+import Button from "../../Buttons";
 import rgbDataURL from "../../../utils/rgbDataURL";
-import { CalendarIcon } from "@heroicons/react/outline";
-import { LocationMarkerIcon } from "@heroicons/react/outline";
-import { ArrowRightIcon } from "@heroicons/react/outline";
+import {
+  CalendarIcon,
+  MapIcon,
+  ArrowRightIcon,
+} from "@heroicons/react/24/outline";
+import classes from "./EventList.module.scss";
 
 export default function EventItems({ item }) {
   const { title, image, date, location, id, imgAlt } = item;
@@ -36,7 +38,7 @@ export default function EventItems({ item }) {
             <time>{formatDate}</time>
           </div>
           <div className={classes.item__address}>
-            <LocationMarkerIcon />
+            <MapIcon />
             <address>{formatAddr}</address>
           </div>
         </div>

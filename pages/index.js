@@ -1,29 +1,34 @@
-import { getFeaturedEvents } from "../utils/api-util";
+// import { getFeaturedEvents } from "../utils/api-util";
+import { getFeaturedEvents } from "../utils/api";
+import getError from "../utils/getError";
 import Header from "../components/Events/Header";
-import NewsletterRegistration from "../components/NewsLettersRegister/NewsletterRegistration";
-import EventList from "../components/Events/EventList/";
+import NewsLettersRegister from "../components/NewsLettersRegister";
+import EventList from "../components/Events/EventList";
 
 export default function HomePage({ event, err }) {
   if (err)
     return (
       <center>
-        <h1>{err}</h1>
+        <br />
+        <br />
+        <h1>{getError(err)}</h1>
       </center>
     );
   return (
-    <div>
+    <>
       <Header
         title="Work Event"
         desc="Explore New Events you can attendance free and paid every week!"
       />
-      <NewsletterRegistration />
+      <NewsLettersRegister />
       <EventList items={event} />
-    </div>
+    </>
   );
 }
 
 export async function getStaticProps() {
   const featuredEvents = await getFeaturedEvents();
+
   if (featuredEvents instanceof Array) {
     return { props: { event: featuredEvents }, revalidate: 1800 };
   }

@@ -1,10 +1,17 @@
 import { useEffect, useRef } from "react";
-import Button from "../Buttons/Button";
-import classes from "./EventSearch.module.scss";
+import { useRouter } from "next/router";
+import Button from "../../Buttons";
+import classes from "./EventSearchForm.module.scss";
 
-function SearchEventForm({ onSearch, search }) {
+function EventSearchForm({ search }) {
   const yearInputRef = useRef();
   const monthInputRef = useRef();
+  const router = useRouter();
+
+  function searchHandler(year, month) {
+    const fullPath = `/events/${year}/${month}`;
+    router.push(fullPath);
+  }
 
   useEffect(() => {
     if (search) {
@@ -18,7 +25,7 @@ function SearchEventForm({ onSearch, search }) {
     e.preventDefault();
     const selectedYear = yearInputRef.current.value;
     const selectedMonth = monthInputRef.current.value;
-    onSearch(selectedYear, selectedMonth);
+    searchHandler(selectedYear, selectedMonth);
   }
 
   return (
@@ -54,4 +61,4 @@ function SearchEventForm({ onSearch, search }) {
   );
 }
 
-export default SearchEventForm;
+export default EventSearchForm;

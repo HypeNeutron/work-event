@@ -3,17 +3,15 @@ import { createContext, useContext, useState } from "react";
 const notificationContext = createContext();
 
 function NotificationContextProvider({ children }) {
-  const idle = { hide: true };
+  const [activeNotification, setActiveNotification] = useState({ hide: true });
 
-  const [activeNotification, setActiveNotification] = useState(idle);
-
-  const hide = () => {
+  const hideNotification = () => {
     setActiveNotification((prev) => ({ ...prev, hide: true }));
   };
 
-  const show = (noticeData) => {
+  const showNotification = (noticeData) => {
     setActiveNotification(noticeData);
-    const time = setTimeout(() => hide(), 5000);
+    const time = setTimeout(() => hideNotification(), 5000);
     return () => {
       clearTimeout(time);
     };
@@ -21,8 +19,8 @@ function NotificationContextProvider({ children }) {
 
   const context = {
     activeNotification,
-    show,
-    hide,
+    showNotification,
+    hideNotification,
   };
 
   return (

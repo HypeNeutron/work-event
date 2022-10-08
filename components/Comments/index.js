@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useState } from "react";
+import getError from "../../utils/getError";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
 import classes from "./Comments.module.scss";
@@ -22,7 +23,7 @@ function Comments({ eventId }) {
         const resp = await fetch(`/api/comments/${eventId}`);
         if (!resp.ok) {
           return resp.json().then((data) => {
-            throw new Error(data.message || "Something went wrong!");
+            throw new Error(data.message);
           });
         }
         const data = await resp.json();
@@ -36,7 +37,7 @@ function Comments({ eventId }) {
         setIsLoading(false);
         show({
           title: "Error",
-          message: err.message,
+          message: getError(err),
           status: "error",
           hide: false,
         });
@@ -64,7 +65,7 @@ function Comments({ eventId }) {
       const res = await fetch(`/api/comments/${eventId}`, fetOpt);
       if (!res.ok) {
         return res.json().then((data) => {
-          throw new Error(data.message || "Something went wrong!");
+          throw new Error(data.message);
         });
       }
       const data = await res.json();
@@ -85,7 +86,7 @@ function Comments({ eventId }) {
       setIsSubmit(false);
       show({
         title: "Error",
-        message: err.message,
+        message: getError(err),
         status: "error",
         hide: false,
       });
@@ -98,9 +99,11 @@ function Comments({ eventId }) {
         {showComments ? "Hide" : "Show"} Comments
       </button>
       {showComments && (
-        <CommentForm isSubmit={isSubmit} addComment={addComment} />
+        <>
+          <CommentForm isSubmit={isSubmit} addComment={addComment} />
+          <CommentList isLoading={isLoading} items={comments} />
+        </>
       )}
-      {showComments && <CommentList isLoading={isLoading} items={comments} />}
     </section>
   );
 }

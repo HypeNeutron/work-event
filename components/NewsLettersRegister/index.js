@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import classes from "./NewsletterRegistration.module.scss";
+import getError from "../../utils/getError";
+import classes from "./NewsLettersRegister.module.scss";
 import { useNotificationContext } from "../../context/notification_context";
 
-function NewsletterRegistration() {
-  const { show } = useNotificationContext();
+export default function NewsLettersRegister() {
+  const { showNotification } = useNotificationContext();
 
   const emailRef = useRef();
   const [isSubmit, setIsSubmit] = useState(false);
@@ -17,7 +18,7 @@ function NewsletterRegistration() {
       return;
     }
 
-    show({
+    showNotification({
       title: "Signing up",
       message: "Registering for newsletter",
       status: "pending",
@@ -32,13 +33,11 @@ function NewsletterRegistration() {
     })
       .then((resp) => {
         if (resp.ok || resp.status === 412) return resp.json();
-        resp.json().then((data) => {
-          throw new Error(data.message || "Something went wrong!");
-        });
+        throw new Error();
       })
       .then((data) => {
         if (data.success) {
-          show({
+          showNotification({
             title: "Success",
             message: "Successfully registered for newsletter!",
             status: "success",
@@ -48,7 +47,7 @@ function NewsletterRegistration() {
           setIsSubmit(false);
           return;
         }
-        show({
+        showNotification({
           title: "Warning",
           message: data.message,
           status: "warning",
@@ -57,11 +56,11 @@ function NewsletterRegistration() {
         emailRef.current.value = "";
         setIsSubmit(false);
       })
-      .catch((error) => {
+      .catch((err) => {
         setIsSubmit(false);
-        show({
+        showNotification({
           title: "Error",
-          message: error.message,
+          message: getError(err),
           status: "error",
           hide: false,
         });
@@ -88,5 +87,3 @@ function NewsletterRegistration() {
     </section>
   );
 }
-
-export default NewsletterRegistration;

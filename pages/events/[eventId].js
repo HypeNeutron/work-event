@@ -1,4 +1,4 @@
-import { getEventById, getFeaturedEvents } from "../../utils/api-util";
+import { getEventById, getFeaturedEvents } from "../../utils/api";
 import ErrorAlert from "../../components/Events/ErrorAlert";
 import { useRouter } from "next/router";
 import {
@@ -7,9 +7,10 @@ import {
   EventCard,
 } from "../../components/Events/EventItemSinglePage";
 import Header from "../../components/Events/Header";
-import Comments from "../../components/Comments/Comments";
+import Comments from "../../components/Comments";
+import getError from "../../utils/getError";
 
-export default function EventDetailPage({ event }) {
+export default function EventDetailPage({ event, err }) {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -20,6 +21,17 @@ export default function EventDetailPage({ event }) {
     );
   }
 
+  if (err)
+    return (
+      <>
+        <center>
+          <br />
+          <br />
+          <h1>{getError(err)}</h1>
+        </center>
+      </>
+    );
+
   if (!event) {
     return (
       <ErrorAlert>
@@ -29,7 +41,6 @@ export default function EventDetailPage({ event }) {
   }
 
   const { id, title, description, date, location, image, imageAlt } = event;
-
   return (
     <>
       <Header title={title} desc={description} />
@@ -49,7 +60,8 @@ export default function EventDetailPage({ event }) {
 }
 
 export async function getStaticPaths() {
-  const events = await getFeaturedEvents(); //prefetch path in server just FeaturedEvents
+  const events = await getFeaturedEvents();
+  //prefetch path in server just FeaturedEvents paths
   const paths = events.map((e) => ({ params: { eventId: e.id } }));
   return {
     paths: paths,
@@ -64,8 +76,11 @@ export async function getStaticProps({ params }) {
       notFound: true,
     };
   }
-  return {
-    props: { event },
-    revalidate: 30,
-  };
+  if (event instanceof Object) {
+    return {
+      props: { event },
+      revalidate: 30,
+    };
+  }
+  return { props: { err: event } };
 }
