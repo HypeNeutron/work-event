@@ -1,5 +1,4 @@
 const getError = (err) => {
-  console.log(err);
   let message;
   const dataRes = err.response?.data;
   if (dataRes) {

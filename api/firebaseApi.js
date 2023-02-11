@@ -6,25 +6,16 @@ export async function getAllEvents() {
   let eventData = [];
   onValue(eventDBRef, async (snapshot) => {
     const data = snapshot.val();
-    const key = Object.keys(data);
-    const values = Object.values(data);
-    let numValues = values.length;
-    const newData = await values.reduce((acc, item) => {
-      if (numValues - 1 >= 0) {
-        item.id = key[numValues - 1];
-        acc.push(item);
-        numValues -= 1;
-      }
-      return acc;
-    }, []);
-
-    eventData.push(...newData);
+    for (const key in data) {
+      eventData.push({ id: key, ...data[key] });
+    }
   });
   return eventData;
 }
 
 export async function getFeaturedEvents() {
   const allEvents = await getAllEvents();
+
   if (!(allEvents instanceof Array)) {
     return allEvents;
   }
